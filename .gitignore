@@ -1,0 +1,26 @@
+# Java
+target/
+*.class
+
+# Maven
+.mvn/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Logs
+logs/
+*.log
+
+# Env files
+.env
+.env.*
+
+# React
+node_modules/
+dist/
+
+# OS
+.DS_Store
+Thumbs.db
