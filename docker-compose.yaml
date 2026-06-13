@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+
+  auth-service:
+    build:
+      context: ./Backend/auth-service
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    environment:
+      DB_URL: jdbc:postgresql://host.docker.internal:5433/todo_microservices_db
+      DB_USERNAME: postgres
+      DB_PASSWORD: Nonsense@123
+      JWT_SECRET: my-secret-key-my-secret-key-my-secret-key-123456
+
+  todo-service:
+    build:
+      context: ./Backend/todo-service
+    container_name: todo-service
+    ports:
+      - "8082:8082"
+    environment:
+      DB_URL: jdbc:postgresql://host.docker.internal:5433/todo_microservices_db
+      DB_USERNAME: postgres
+      DB_PASSWORD: Nonsense@123
+      JWT_SECRET: my-secret-key-my-secret-key-my-secret-key-123456
+
+  api-gateway:
+    build:
+      context: ./Backend/api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth-service
+      - todo-service
+
+  react-client:
+    build:
+      context: ./Frontend/todo-frontend
+    container_name: react-client
+    ports:
+      - "5173:80"
+    depends_on:
+      - api-gateway
