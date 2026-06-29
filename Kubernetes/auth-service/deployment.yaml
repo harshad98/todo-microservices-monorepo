@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: auth-service
+  namespace: todo-app
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: auth-service
+
+  template:
+    metadata:
+      labels:
+        app: auth-service
+
+    spec:
+      containers:
+      - name: auth-service
+
+        image: harshad321/auth-service:latest
+
+        ports:
+        - containerPort: 8081
+
+        env:
+
+        - name: DB_URL
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: DB_URL
+
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: DB_USERNAME
+
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: DB_PASSWORD
+
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: JWT_SECRET

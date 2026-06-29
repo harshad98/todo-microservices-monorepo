@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: todo-service
+  namespace: todo-app
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: todo-service
+
+  template:
+    metadata:
+      labels:
+        app: todo-service
+
+    spec:
+      containers:
+      - name: todo-service
+
+        image: harshad321/todo-service:latest
+
+        ports:
+        - containerPort: 8082
+
+        env:
+
+        - name: DB_URL
+          valueFrom:
+            configMapKeyRef:
+              name: backend-config
+              key: DB_URL
+
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: DB_USERNAME
+
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: DB_PASSWORD
+
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: JWT_SECRET

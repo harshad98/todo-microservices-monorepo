@@ -9,36 +9,36 @@ spring:
 
     gateway:
 
-      globalcors:
-
-        cors-configurations:
-
-          '[/**]':
-
-            allowedOrigins:
-              - "http://localhost:5173"
-
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-
-            allowedHeaders:
-              - "*"
-
-            allowCredentials: true
+#      globalcors:
+#
+#        cors-configurations:
+#
+#          '[/**]':
+#
+#            allowedOrigins:
+#              - "http://localhost:5173"
+#
+#            allowedMethods:
+#              - GET
+#              - POST
+#              - PUT
+#              - DELETE
+#              - OPTIONS
+#
+#            allowedHeaders:
+#              - "*"
+#
+#            allowCredentials: true
 
       routes:
 
         - id: auth-service
-          uri: http://localhost:8081
+          uri: http://auth-service:8081
           predicates:
             - Path=/auth/**
 
         - id: todo-service
-          uri: http://localhost:8082
+          uri: http://todo-service:8082
           predicates:
             - Path=/todos/**
 
