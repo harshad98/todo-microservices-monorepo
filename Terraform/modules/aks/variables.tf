@@ -33,10 +33,10 @@ variable "subnet_id" {
   type        = string
 }
 
-variable "acr_id" {
-  description = "Azure Container Registry ID"
-  type        = string
-}
+# variable "acr_id" {
+#   description = "Azure Container Registry ID"
+#   type        = string
+# }
 
 variable "tags" {
   description = "Common Tags"

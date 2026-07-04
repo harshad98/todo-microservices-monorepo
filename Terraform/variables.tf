@@ -62,16 +62,7 @@ variable "aks_subnet_prefixes" {
 # Azure Container Registry
 ##############################
 
-variable "acr_name" {
-  description = "Azure Container Registry Name"
-  type        = string
-}
 
-variable "acr_sku" {
-  description = "Azure Container Registry SKU"
-  type        = string
-  default     = "Basic"
-}
 
 ##############################
 # AKS Cluster

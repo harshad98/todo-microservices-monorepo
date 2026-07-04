@@ -35,15 +35,15 @@ output "subnet_id" {
 # Azure Container Registry
 ##############################
 
-output "acr_name" {
-  description = "Azure Container Registry Name"
-  value       = module.acr.name
-}
+# output "acr_name" {
+#   description = "Azure Container Registry Name"
+#   value       = module.acr.name
+# }
 
-output "acr_login_server" {
-  description = "Azure Container Registry Login Server"
-  value       = module.acr.login_server
-}
+# output "acr_login_server" {
+#   description = "Azure Container Registry Login Server"
+#   value       = module.acr.login_server
+# }
 
 ##############################
 # AKS Cluster

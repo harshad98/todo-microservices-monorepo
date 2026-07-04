@@ -32,16 +32,6 @@ module "network" {
 # Azure Container Registry
 ##############################
 
-module "acr" {
-  source = "./modules/acr"
-
-  acr_name            = var.acr_name
-  acr_sku             = var.acr_sku
-  resource_group_name = module.resource_group.name
-  location            = module.resource_group.location
-
-  tags = var.tags
-}
 
 ##############################
 # AKS Cluster
