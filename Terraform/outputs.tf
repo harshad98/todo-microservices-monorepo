@@ -64,3 +64,18 @@ output "kube_config" {
   value       = module.aks.kube_config
   sensitive   = true
 }
+
+##############################
+# Postgres
+##############################
+output "server_name" {
+  value = module.postgres.server_name
+}
+
+output "fqdn" {
+  value = module.postgres.fqdn
+}
+
+output "database_name" {
+  value = module.postgres.database_name
+}
