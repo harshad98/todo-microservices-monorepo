@@ -49,7 +49,34 @@ module "aks" {
   vm_size    = var.vm_size
 
   subnet_id = module.network.subnet_id
-  acr_id    = module.acr.id
+  # acr_id    = module.acr.id
 
   tags = var.tags
+}
+
+##############################
+# postgres
+##############################
+module "postgres" {
+
+  source = "./modules/postgres"
+
+  resource_group_name = module.resource_group.name
+
+  location = module.resource_group.location
+
+  postgres_server_name = var.postgres_server_name
+
+  postgres_database_name = var.postgres_database_name
+
+  postgres_admin_username = var.postgres_admin_username
+
+  postgres_admin_password = var.postgres_admin_password
+
+  postgres_version = var.postgres_version
+
+  postgres_sku_name = var.postgres_sku_name
+
+  postgres_storage_mb = var.postgres_storage_mb
+
 }
