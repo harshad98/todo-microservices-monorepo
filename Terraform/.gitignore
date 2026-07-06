@@ -1,20 +1,47 @@
+############################################
 # Terraform
-.terraform/
-*.tfstate
-*.tfstate.*
-crash.log
+############################################
 
-# Variable files (contains secrets)
-terraform.tfvars
-*.auto.tfvars
+# Terraform working directory
+**/.terraform/
 
-# Keep the lock file
-!.terraform.lock.hcl
+# Terraform state files
+**/*.tfstate
+**/*.tfstate.*
 
+# Crash logs
+**/crash.log
+
+# Terraform variable files (contains secrets)
+**/terraform.tfvars
+**/*.auto.tfvars
+
+# Override files
+**/override.tf
+**/override.tf.json
+**/*_override.tf
+**/*_override.tf.json
+
+# Terraform plan files
+**/*.tfplan
+
+# CLI configuration
+.terraformrc
+terraform.rc
+
+# Keep lock files
+!**/.terraform.lock.hcl
+
+############################################
 # IDE
+############################################
+
 .vscode/
 .idea/
 
-# OS
+############################################
+# Operating System
+############################################
+
 .DS_Store
 Thumbs.db

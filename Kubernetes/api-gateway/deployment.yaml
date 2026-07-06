@@ -22,7 +22,7 @@ spec:
 
       - name: api-gateway
 
-        image: harshad321/api-gateway:latest
+        image: harshad321/api-gateway:v3
 
         ports:
         - containerPort: 8080

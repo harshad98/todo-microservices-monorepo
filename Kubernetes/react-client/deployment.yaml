@@ -22,7 +22,7 @@ spec:
 
       - name: react-client
 
-        image: harshad321/react-client:latest
+        image: harshad321/react-client:v4
 
         ports:
         - containerPort: 80

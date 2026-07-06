@@ -18,10 +18,10 @@ terraform {
       version = "~> 2.35"
     }
 
-    helm = {
-      source  = "hashicorp/helm"
-      version = "~> 2.15"
-    }
+    # helm = {
+    #   source  = "hashicorp/helm"
+    #   version = "~> 2.15"
+    # }
 
   }
 }

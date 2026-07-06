@@ -26,7 +26,7 @@ variable "postgres_sku_name" {
 
 variable "postgres_storage_mb" {
   type    = number
-  default = 5120
+  default = 32768
 }
 
 variable "postgres_version" {

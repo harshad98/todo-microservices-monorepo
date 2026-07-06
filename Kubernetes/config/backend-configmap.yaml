@@ -5,4 +5,5 @@ metadata:
   namespace: todo-app
 
 data:
-  DB_URL: jdbc:postgresql://localhost:5433/todo_microservices_db
+  # DB_URL: jdbc:postgresql://localhost:5433/todo_microservices_db
+  DB_URL: jdbc:postgresql://todo-postgres-harshad26.postgres.database.azure.com:5432/todo_microservices_db
