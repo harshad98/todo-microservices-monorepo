@@ -46,7 +46,7 @@ export default function LoginPage() {
         </p>
 
         <p className="text-green-400 mt-2">
-          Containerized with Docker & Deployed on Azure Kubernetes Service (AKS)
+          four cicd Containerized with Docker & Deployed on Azure Kubernetes Service (AKS)
         </p>
 
         <p className="text-blue-400 font-medium mt-2">
