@@ -38,7 +38,7 @@ export default function LoginPage() {
       {/* Portfolio Header */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-white">
-          Todo Management Platform CICD three
+          Todo Management Platform CICD done bro
         </h1>
 
         <p className="text-gray-400 mt-2">
@@ -46,7 +46,7 @@ export default function LoginPage() {
         </p>
 
         <p className="text-green-400 mt-2">
-          four cicd Containerized with Docker & Deployed on Azure Kubernetes Service (AKS)
+          cicd is done bro. Containerized with Docker & Deployed on Azure Kubernetes Service (AKS)
         </p>
 
         <p className="text-blue-400 font-medium mt-2">

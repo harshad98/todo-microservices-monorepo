@@ -39,7 +39,7 @@ export default function RegisterPage() {
       >
 
         <h2 className="text-2xl font-bold">
-          Register
+          Register cicd is done 
         </h2>
 
         <input
