@@ -117,7 +117,7 @@ jobs:
           docker build \
           -t harshad321/react-client:${{ env.IMAGE_TAG }} \
           -t harshad321/react-client:latest \
-          Frontend
+          Frontend/todo-frontend
 
       ###########################################################
       # Push Images
