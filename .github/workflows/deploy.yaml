@@ -1,0 +1,214 @@
+name: Build and Deploy to AKS
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      ###########################################################
+      # Checkout Repository
+      ###########################################################
+
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      ###########################################################
+      # Setup Java
+      ###########################################################
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      ###########################################################
+      # Setup Node
+      ###########################################################
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      ###########################################################
+      # Login Docker Hub
+      ###########################################################
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      ###########################################################
+      # Build Auth Service
+      ###########################################################
+
+      - name: Build Auth Service
+        working-directory: Backend/auth-service
+        run: mvn clean package -DskipTests
+
+      ###########################################################
+      # Build Todo Service
+      ###########################################################
+
+      - name: Build Todo Service
+        working-directory: Backend/todo-service
+        run: mvn clean package -DskipTests
+
+      ###########################################################
+      # Build API Gateway
+      ###########################################################
+
+      - name: Build API Gateway
+        working-directory: Backend/api-gateway
+        run: mvn clean package -DskipTests
+
+      ###########################################################
+      # Build React
+      ###########################################################
+
+      - name: Install Frontend Dependencies
+        working-directory: Frontend/todo-frontend
+        run: npm install
+
+      - name: Build React App
+        working-directory: Frontend/todo-frontend
+        run: npm run build
+
+      ###########################################################
+      # Build Docker Images
+      ###########################################################
+
+      - name: Build Auth Image
+        run: |
+          docker build \
+          -t harshad321/auth-service:${{ env.IMAGE_TAG }} \
+          -t harshad321/auth-service:latest \
+          Backend/auth-service
+
+      - name: Build Todo Image
+        run: |
+          docker build \
+          -t harshad321/todo-service:${{ env.IMAGE_TAG }} \
+          -t harshad321/todo-service:latest \
+          Backend/todo-service
+
+      - name: Build Gateway Image
+        run: |
+          docker build \
+          -t harshad321/api-gateway:${{ env.IMAGE_TAG }} \
+          -t harshad321/api-gateway:latest \
+          Backend/api-gateway
+
+      - name: Build React Image
+        run: |
+          docker build \
+          -t harshad321/react-client:${{ env.IMAGE_TAG }} \
+          -t harshad321/react-client:latest \
+          Frontend
+
+      ###########################################################
+      # Push Images
+      ###########################################################
+
+      - name: Push Auth Image
+        run: |
+          docker push harshad321/auth-service:${{ env.IMAGE_TAG }}
+          docker push harshad321/auth-service:latest
+
+      - name: Push Todo Image
+        run: |
+          docker push harshad321/todo-service:${{ env.IMAGE_TAG }}
+          docker push harshad321/todo-service:latest
+
+      - name: Push Gateway Image
+        run: |
+          docker push harshad321/api-gateway:${{ env.IMAGE_TAG }}
+          docker push harshad321/api-gateway:latest
+
+      - name: Push React Image
+        run: |
+          docker push harshad321/react-client:${{ env.IMAGE_TAG }}
+          docker push harshad321/react-client:latest
+
+      ###########################################################
+      # Azure Login
+      ###########################################################
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      ###########################################################
+      # Connect AKS
+      ###########################################################
+
+      - name: Get AKS Credentials
+        uses: azure/aks-set-context@v4
+        with:
+          resource-group: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          cluster-name: ${{ secrets.AKS_CLUSTER_NAME }}
+
+      ###########################################################
+      # Update Images
+      ###########################################################
+
+      - name: Update Auth Deployment
+        run: |
+          kubectl set image deployment/auth-service \
+          auth-service=harshad321/auth-service:${{ env.IMAGE_TAG }} \
+          -n todo-app
+
+      - name: Update Todo Deployment
+        run: |
+          kubectl set image deployment/todo-service \
+          todo-service=harshad321/todo-service:${{ env.IMAGE_TAG }} \
+          -n todo-app
+
+      - name: Update Gateway Deployment
+        run: |
+          kubectl set image deployment/api-gateway \
+          api-gateway=harshad321/api-gateway:${{ env.IMAGE_TAG }} \
+          -n todo-app
+
+      - name: Update React Deployment
+        run: |
+          kubectl set image deployment/react-client \
+          react-client=harshad321/react-client:${{ env.IMAGE_TAG }} \
+          -n todo-app
+
+      ###########################################################
+      # Wait for Rollout
+      ###########################################################
+
+      - name: Wait for Auth Rollout
+        run: kubectl rollout status deployment/auth-service -n todo-app
+
+      - name: Wait for Todo Rollout
+        run: kubectl rollout status deployment/todo-service -n todo-app
+
+      - name: Wait for Gateway Rollout
+        run: kubectl rollout status deployment/api-gateway -n todo-app
+
+      - name: Wait for React Rollout
+        run: kubectl rollout status deployment/react-client -n todo-app
+
+      ###########################################################
+      # Verify Pods
+      ###########################################################
+
+      - name: Verify Pods
+        run: kubectl get pods -n todo-app
