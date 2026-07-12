@@ -26,6 +26,10 @@ module "network" {
   aks_subnet_prefixes  = var.aks_subnet_prefixes
 
   tags = var.tags
+
+  private_endpoint_subnet_name = var.private_endpoint_subnet_name
+
+  private_endpoint_subnet_prefixes = var.private_endpoint_subnet_prefixes
 }
 
 ##############################
@@ -78,5 +82,9 @@ module "postgres" {
   postgres_sku_name = var.postgres_sku_name
 
   postgres_storage_mb = var.postgres_storage_mb
+
+  private_endpoint_subnet_id = module.network.private_endpoint_subnet_id
+
+  vnet_id = module.network.vnet_id
 
 }

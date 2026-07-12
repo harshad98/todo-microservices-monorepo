@@ -31,6 +31,7 @@ output "subnet_id" {
   value       = module.network.subnet_id
 }
 
+
 ##############################
 # Azure Container Registry
 ##############################
@@ -78,4 +79,14 @@ output "fqdn" {
 
 output "database_name" {
   value = module.postgres.database_name
+}
+##############################
+# private endpoint subnet
+##############################
+output "private_endpoint_subnet_id" {
+  value = module.network.private_endpoint_subnet_id
+}
+
+output "private_endpoint_subnet_name" {
+  value = module.network.private_endpoint_subnet_name
 }

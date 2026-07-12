@@ -15,3 +15,14 @@ resource "azurerm_subnet" "aks" {
 
   address_prefixes = var.aks_subnet_prefixes
 }
+
+resource "azurerm_subnet" "private_endpoint" {
+
+  name                 = var.private_endpoint_subnet_name
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.this.name
+
+  address_prefixes = var.private_endpoint_subnet_prefixes
+
+  private_endpoint_network_policies = "Disabled"
+}

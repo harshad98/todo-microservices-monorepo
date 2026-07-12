@@ -17,3 +17,15 @@ output "subnet_name" {
   description = "AKS Subnet Name"
   value       = azurerm_subnet.aks.name
 }
+
+##############################
+# private endpoint subnet
+##############################
+output "private_endpoint_subnet_id" {
+  value = azurerm_subnet.private_endpoint.id
+}
+
+output "private_endpoint_subnet_name" {
+  value = azurerm_subnet.private_endpoint.name
+}
+
