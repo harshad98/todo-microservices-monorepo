@@ -90,3 +90,22 @@ output "private_endpoint_subnet_id" {
 output "private_endpoint_subnet_name" {
   value = module.network.private_endpoint_subnet_name
 }
+
+##############################
+# NSG
+##############################
+output "aks_nsg_id" {
+  value = module.network.aks_nsg_id
+}
+
+output "aks_nsg_name" {
+  value = module.network.aks_nsg_name
+}
+
+output "private_endpoint_nsg_id" {
+  value = module.network.private_endpoint_nsg_id
+}
+
+output "private_endpoint_nsg_name" {
+  value = module.network.private_endpoint_nsg_name
+}

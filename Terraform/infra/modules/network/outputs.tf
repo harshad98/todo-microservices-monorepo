@@ -29,3 +29,21 @@ output "private_endpoint_subnet_name" {
   value = azurerm_subnet.private_endpoint.name
 }
 
+##############################
+# NSG
+##############################
+output "aks_nsg_id" {
+  value = azurerm_network_security_group.aks.id
+}
+
+output "aks_nsg_name" {
+  value = azurerm_network_security_group.aks.name
+}
+
+output "private_endpoint_nsg_id" {
+  value = azurerm_network_security_group.private_endpoint.id
+}
+
+output "private_endpoint_nsg_name" {
+  value = azurerm_network_security_group.private_endpoint.name
+}
