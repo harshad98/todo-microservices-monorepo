@@ -154,4 +154,26 @@ variable "private_endpoint_subnet_prefixes" {
   type = list(string)
 }
 
+############################################
+# Monitoring
+############################################
 
+variable "log_analytics_workspace_name" {
+  description = "Log Analytics Workspace Name"
+  type        = string
+}
+
+variable "monitor_workspace_name" {
+  description = "Azure Monitor Workspace Name"
+  type        = string
+}
+
+variable "grafana_name" {
+  description = "Azure Managed Grafana Name"
+  type        = string
+}
+
+variable "alert_email" {
+  description = "Email for monitoring alerts"
+  type        = string
+}

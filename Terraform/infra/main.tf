@@ -32,9 +32,24 @@ module "network" {
   private_endpoint_subnet_prefixes = var.private_endpoint_subnet_prefixes
 }
 
-##############################
-# Azure Container Registry
-##############################
+############################################
+# Monitoring Infrastructure
+############################################
+
+module "monitoring" {
+
+  source = "./modules/monitoring"
+
+  resource_group_name = module.resource_group.name
+  location            = module.resource_group.location
+
+  log_analytics_workspace_name = var.log_analytics_workspace_name
+  monitor_workspace_name       = var.monitor_workspace_name
+  grafana_name                  = var.grafana_name
+  alert_email                   =  var.alert_email
+
+  tags = var.tags
+}
 
 
 ##############################
@@ -54,6 +69,7 @@ module "aks" {
 
   subnet_id = module.network.subnet_id
   # acr_id    = module.acr.id
+  log_analytics_workspace_id = module.monitoring.log_analytics_workspace_id
 
   tags = var.tags
 }
@@ -88,3 +104,4 @@ module "postgres" {
   vnet_id = module.network.vnet_id
 
 }
+

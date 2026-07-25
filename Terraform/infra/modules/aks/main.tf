@@ -25,8 +25,24 @@ resource "azurerm_kubernetes_cluster" "this" {
     dns_service_ip = "10.1.0.10"
   }
 
+  #################################
+  # Container Insights
+  #################################
+
+  oms_agent {
+    log_analytics_workspace_id = var.log_analytics_workspace_id
+  }
+
+  # Managed Prometheus
+  monitor_metrics {
+    annotations_allowed = null
+    labels_allowed      = null
+  }
+
   tags = var.tags
 }
+
+
 
 /*
 resource "azurerm_role_assignment" "acr_pull" {
@@ -35,3 +51,5 @@ resource "azurerm_role_assignment" "acr_pull" {
   principal_id         = azurerm_kubernetes_cluster.this.kubelet_identity[0].object_id
 }
 */
+
+

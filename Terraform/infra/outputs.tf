@@ -109,3 +109,23 @@ output "private_endpoint_nsg_id" {
 output "private_endpoint_nsg_name" {
   value = module.network.private_endpoint_nsg_name
 }
+
+############################################
+# Monitoring
+############################################
+
+output "log_analytics_workspace_id" {
+  value = module.monitoring.log_analytics_workspace_id
+}
+
+output "monitor_workspace_id" {
+  value = module.monitoring.monitor_workspace_id
+}
+
+output "grafana_id" {
+  value = module.monitoring.grafana_id
+}
+
+output "grafana_endpoint" {
+  value = module.monitoring.grafana_endpoint
+}

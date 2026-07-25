@@ -42,3 +42,8 @@ variable "tags" {
   description = "Common Tags"
   type        = map(string)
 }
+
+variable "log_analytics_workspace_id" {
+  description = "Log Analytics Workspace ID for Container Insights"
+  type        = string
+}
