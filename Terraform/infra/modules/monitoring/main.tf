@@ -38,7 +38,7 @@ resource "azurerm_dashboard_grafana" "this" {
   location            = var.location
   resource_group_name = var.resource_group_name
 
-  grafana_major_version = 11
+  grafana_major_version = 12
 
   identity {
     type = "SystemAssigned"

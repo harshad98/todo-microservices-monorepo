@@ -17,6 +17,11 @@ spec:
       labels:
         app: todo-service
 
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8082"
+
     spec:
       containers:
       - name: todo-service
@@ -26,8 +31,22 @@ spec:
         ports:
         - containerPort: 8082
 
-        env:
 
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8082
+          initialDelaySeconds: 30
+          periodSeconds: 10
+
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8082
+          initialDelaySeconds: 20
+          periodSeconds: 10
+
+        env:
         - name: DB_URL
           valueFrom:
             configMapKeyRef:

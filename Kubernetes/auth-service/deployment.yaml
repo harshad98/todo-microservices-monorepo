@@ -17,37 +17,55 @@ spec:
       labels:
         app: auth-service
 
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8081"
+
     spec:
       containers:
-      - name: auth-service
+        - name: auth-service
 
-        image: harshad321/auth-service:latest
+          image: harshad321/auth-service:latest
 
-        ports:
-        - containerPort: 8081
+          ports:
+            - containerPort: 8081
 
-        env:
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 30
+            periodSeconds: 10
 
-        - name: DB_URL
-          valueFrom:
-            configMapKeyRef:
-              name: backend-config
-              key: DB_URL
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 20
+            periodSeconds: 10
 
-        - name: DB_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: backend-secret
-              key: DB_USERNAME
+          env:
+            - name: DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: DB_URL
 
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: backend-secret
-              key: DB_PASSWORD
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret
+                  key: DB_USERNAME
 
-        - name: JWT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: backend-secret
-              key: JWT_SECRET
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret
+                  key: DB_PASSWORD
+
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret
+                  key: JWT_SECRET

@@ -15,15 +15,22 @@ spring:
 server:
   port: 8081
 
+jwt:
+  secret: ${JWT_SECRET}
+
 management:
   endpoints:
     web:
       exposure:
-        include: health
-
-jwt:
-  secret: ${JWT_SECRET}
+        include:
+          - health
+          - prometheus
 
   endpoint:
     health:
       show-details: always
+
+  prometheus:
+    metrics:
+      export:
+        enabled: true
