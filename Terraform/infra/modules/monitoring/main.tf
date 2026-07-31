@@ -39,9 +39,15 @@ resource "azurerm_dashboard_grafana" "this" {
   resource_group_name = var.resource_group_name
 
   grafana_major_version = 12
+  api_key_enabled = true
 
   identity {
     type = "SystemAssigned"
+  }
+#enable azure monitor workspace integration
+
+  azure_monitor_workspace_integrations {
+    resource_id = azurerm_monitor_workspace.this.id
   }
 
   tags = var.tags
@@ -59,4 +65,32 @@ resource "azurerm_role_assignment" "grafana_monitoring_reader" {
   scope                = azurerm_monitor_workspace.this.id
   role_definition_name = "Monitoring Data Reader"
   principal_id         = azurerm_dashboard_grafana.this.identity[0].principal_id
+}
+############################################
+# Grafana Permission
+#
+# Allows Grafana to read from 
+#complete resource group
+############################################
+
+resource "azurerm_role_assignment" "grafana_reader" {
+
+  scope = var.resource_group_id
+
+  role_definition_name = "Reader"
+
+  principal_id = azurerm_dashboard_grafana.this.identity[0].principal_id
+}
+
+############################################
+# new role assignment for grafana RBAC
+############################################
+
+resource "azurerm_role_assignment" "grafana_admin" {
+
+  scope = azurerm_dashboard_grafana.this.id
+
+  role_definition_name = "Grafana Admin"
+
+  principal_id = var.grafana_admin_object_id
 }

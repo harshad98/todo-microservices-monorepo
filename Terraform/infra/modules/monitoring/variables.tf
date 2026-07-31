@@ -32,3 +32,21 @@ variable "alert_email" {
   description = "Email address for Azure Monitor alerts"
   type        = string
 }
+
+variable "resource_group_id" {
+  type = string
+}
+
+variable "aks_cluster_id" {
+  type = string
+}
+
+variable "grafana_admin_object_id" {
+  type = string
+}
+
+variable "grafana_token" {
+  description = "Grafana Service Account Token"
+  type        = string
+  sensitive   = true
+}

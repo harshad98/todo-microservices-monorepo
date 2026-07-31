@@ -12,6 +12,10 @@ output "resource_group_location" {
   value       = module.resource_group.location
 }
 
+output "resource_group_id" {
+  value=module.resource_group.id
+}
+
 ##############################
 # Network
 ##############################
@@ -116,6 +120,10 @@ output "private_endpoint_nsg_name" {
 
 output "log_analytics_workspace_id" {
   value = module.monitoring.log_analytics_workspace_id
+}
+
+output "log_analytics_workspace_name" {
+  value = module.monitoring.log_analytics_workspace_name
 }
 
 output "monitor_workspace_id" {

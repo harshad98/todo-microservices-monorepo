@@ -33,10 +33,14 @@ resource "azurerm_kubernetes_cluster" "this" {
     log_analytics_workspace_id = var.log_analytics_workspace_id
   }
 
-  # Managed Prometheus
+#################################
+  # enable managed prometheus
+  #################################  
   monitor_metrics {
     annotations_allowed = null
     labels_allowed      = null
+
+    # workspace_resource_id = var.monitor_workspace_id
   }
 
   tags = var.tags

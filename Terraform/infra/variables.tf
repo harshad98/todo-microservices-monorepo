@@ -177,3 +177,9 @@ variable "alert_email" {
   description = "Email for monitoring alerts"
   type        = string
 }
+
+variable "grafana_token" {
+  type      = string
+  sensitive = true
+}
+

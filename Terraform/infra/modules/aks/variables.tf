@@ -47,3 +47,10 @@ variable "log_analytics_workspace_id" {
   description = "Log Analytics Workspace ID for Container Insights"
   type        = string
 }
+
+# variable "monitor_workspace_id" {
+#   description = "Azure Monitor Workspace ID"
+#   type        = string
+# }
+
+

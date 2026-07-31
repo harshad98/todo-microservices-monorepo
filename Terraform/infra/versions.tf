@@ -8,6 +8,17 @@ terraform {
       version = "~> 4.0"
     }
 
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~> 3.0"
+    }
+
+    grafana = {
+      source  = "grafana/grafana"
+      version = "~>3.20"
+    }
+
+
     random = {
       source  = "hashicorp/random"
       version = "~> 3.6"

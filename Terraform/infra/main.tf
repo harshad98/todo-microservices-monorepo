@@ -47,6 +47,11 @@ module "monitoring" {
   monitor_workspace_name       = var.monitor_workspace_name
   grafana_name                  = var.grafana_name
   alert_email                   =  var.alert_email
+  resource_group_id   = module.resource_group.id
+  aks_cluster_id = module.aks.id
+  grafana_admin_object_id =  data.azuread_client_config.current.object_id
+
+grafana_token =  var.grafana_token
 
   tags = var.tags
 }
